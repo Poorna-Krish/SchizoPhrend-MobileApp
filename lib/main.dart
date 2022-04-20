@@ -1,3 +1,4 @@
+import 'package:schizophrend/screens/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class SchizoPhrendWelcome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SchizoPhrend'),
+        title: const Text('SchizoPhren'),
         backgroundColor: Colors.lightBlue[800],
       ),
       body: Center(
@@ -23,7 +24,11 @@ class SchizoPhrendWelcome extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
             TextButton(
-              onPressed: null,
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const WelcomeScreen(),
+                  )),
              child: const Text('ADMIN',
                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0, fontFamily: 'Roboto')
              ),
@@ -43,7 +48,11 @@ class SchizoPhrendWelcome extends StatelessWidget {
                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                  backgroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),
                ),
-               onPressed: null,
+               onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                      builder: (context) => const WelcomeScreen(),
+                )),
                child: const Text('DOCTOR',
                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0, fontFamily: 'Roboto')
                )
@@ -56,7 +65,11 @@ class SchizoPhrendWelcome extends StatelessWidget {
                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent),
              ),
-               onPressed: null,
+               onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                    builder: (context) => const WelcomeScreen(),
+                    )),
                child: const Text('PATIENT',
                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20.0, fontFamily: 'Roboto')
                )
