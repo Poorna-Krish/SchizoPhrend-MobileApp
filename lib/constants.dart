@@ -14,16 +14,25 @@ OutlineInputBorder textFieldBorder = OutlineInputBorder(
   ),
 );
 
-// I will explain it later
-
 const emailError = 'Enter a valid email address';
 const requiredField = "This field is required";
 
+class PhoneValidator extends TextFieldValidator {
+  PhoneValidator({String errorText = 'Enter a valid phone number'})
+      : super(errorText);
+  @override
+  bool get ignoreEmptyValues => true;
+  @override
+  bool isValid(String? value) {
+    return hasMatch(r'([0-9]{10})', value!);
+  }
+}
+
 final passwordValidator = MultiValidator(
   [
-    RequiredValidator(errorText: 'password is required'),
-    MinLengthValidator(8, errorText: 'password must be at least 8 digits long'),
+    RequiredValidator(errorText: 'Password is required'),
+    MinLengthValidator(8, errorText: 'Password must be at least 8 digits long'),
     PatternValidator(r'(?=.*?[#?!@$%^&*-])',
-        errorText: 'passwords must have at least one special character')
+        errorText: 'Passwords must have at least one special character')
   ],
 );

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
@@ -12,6 +14,7 @@ class SignInForm extends StatelessWidget {
 
   final GlobalKey formKey;
 
+  // ignore: unused_field
   late String _email, _password;
 
   @override
@@ -31,9 +34,8 @@ class SignInForm extends StatelessWidget {
           const SizedBox(height: defaultPadding),
           const TextFieldName(text: "Password"),
           TextFormField(
-            // We want to hide our password
             obscureText: true,
-            decoration: const InputDecoration(hintText: "******"),
+            decoration: const InputDecoration(hintText: "********"),
             validator: passwordValidator,
             onSaved: (password) => _password = password!,
           ),
