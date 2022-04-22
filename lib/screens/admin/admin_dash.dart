@@ -1,24 +1,17 @@
+// ignore_for_file: sized_box_for_whitespace, avoid_print
+
 import 'package:flutter/material.dart';
+import 'package:schizophrend/main.dart';
+import 'package:schizophrend/screens/admin/components/admin_nav_bar.dart';
 
 class AdminDashboard extends StatelessWidget {
   const AdminDashboard({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'SchizoPhren',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: const AdminDash(title: 'Admin Dashboard'),
@@ -28,16 +21,6 @@ class AdminDashboard extends StatelessWidget {
 
 class AdminDash extends StatefulWidget {
   const AdminDash({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -45,57 +28,25 @@ class AdminDash extends StatefulWidget {
 }
 
 class _AdminDashState extends State<AdminDash> {
-  int _counter = 0;
+  bool loggedIn = true;
 
-  void _incrementCounter() {
+  void logOut() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      loggedIn = false;
+      print('Logged Out!');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SchizoPhrendWelcome(),
+        ),
+      );
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget buildMenuItem({required String text, required IconData icon}) {
-      const color = Colors.white;
-      return ListTile(
-          leading: Icon(icon, color: color),
-          title: Text(text, style: const TextStyle(color: color)));
-    }
-
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-        drawer: Drawer(
-            child: Container(
-                color: Colors.blue,
-                child: ListView(children: <Widget>[
-                  const SizedBox(height: 48),
-                  buildMenuItem(
-                    text: 'Dashboard',
-                    icon: Icons.dashboard,
-                  ),
-                  const SizedBox(height: 48),
-                  buildMenuItem(
-                    text: 'Doctors',
-                    icon: Icons.people,
-                  ),
-                  const SizedBox(height: 48),
-                  buildMenuItem(
-                    text: 'Patients',
-                    icon: Icons.sick,
-                  )
-                  // Text('Doctors'),
-                  // Text('Patients'),
-                ]))),
+        drawer: const AdminNavBar(title: 'Admin Dashboard'),
         appBar: AppBar(
           title: Text(widget.title),
           // leading: GestureDetector(
@@ -108,74 +59,457 @@ class _AdminDashState extends State<AdminDash> {
             Padding(
                 padding: const EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: logOut,
                   child: const Icon(Icons.logout),
                 )),
           ],
         ),
         body: ListView(children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 margin:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                child: TextButton(
-                    onPressed: null,
-                    child: const Text('2 total Patients',
-                        style: TextStyle(color: Colors.white)),
-                    style: TextButton.styleFrom(
-                        backgroundColor: Colors.amber,
-                        padding: const EdgeInsets.all(20))),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                width: 160,
+                color: Colors.amber,
+                child: const ListTile(
+                    contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 15),
+                    title: Text('2 total Patients',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold)),
+                    subtitle: Text('Approval Required: 1',
+                        style: TextStyle(color: Colors.white))),
               ),
-              TextButton(
-                onPressed: null,
-                child: const Text('3 total Doctors',
-                    style: TextStyle(color: Colors.white)),
-                style: TextButton.styleFrom(
-                    backgroundColor: Colors.redAccent,
-                    padding: const EdgeInsets.all(20)),
+              Container(
+                color: Colors.redAccent,
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                width: 160,
+                child: const ListTile(
+                  contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 15),
+                  title: Text('3 total Doctors',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold)),
+                  subtitle: Text('Approval Required: 1',
+                      style: TextStyle(color: Colors.white)),
+                ),
               ),
             ],
           ),
-          // Row(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     crossAxisAlignment: CrossAxisAlignment.end,
-          //     children: const [
-          //       Text('No recent Doctors or Patients'),
-          //     ]),
-          ListView(children: [
-            Table(
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                TableRow(children: [
-                  Column(
-                    children: const [Text('Patient 1')],
-                  ),
-                  Column(
-                    children: const [Text('Patient 2')],
-                  ),
-                  Column(
-                    children: const [Text('Patient 3')],
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                  child: const Text('Recent Patients: '),
+                )
+              ]),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Table(
+                border: TableBorder.all(),
+                columnWidths: const <int, TableColumnWidth>{
+                  0: FixedColumnWidth(60),
+                  1: FixedColumnWidth(43),
+                  2: FixedColumnWidth(90),
+                  3: FixedColumnWidth(85),
+                  4: FixedColumnWidth(75),
+                },
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: <TableRow>[
+                  TableRow(children: [
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('Name'),
+                        color: const Color.fromARGB(255, 202, 220, 230),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('Age'),
+                        color: const Color.fromARGB(255, 202, 220, 230),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('Number'),
+                        color: const Color.fromARGB(255, 202, 220, 230),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('Admit Date'),
+                        color: const Color.fromARGB(255, 202, 220, 230),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('Status'),
+                        color: const Color.fromARGB(255, 202, 220, 230),
+                      ),
+                    ),
+                  ]),
+                  TableRow(children: [
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('Alina'),
+                        height: 32,
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('39'),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('9888888889'),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('09-04-2022 16:45:32'),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('Admitted',
+                            style: TextStyle(color: Colors.green)),
+                      ),
+                    ),
+                  ]),
+                  TableRow(children: [
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('Sarada'),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('23'),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('9999999999'),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('09-04-2022 16:45:32'),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('Admitted',
+                            style: TextStyle(color: Colors.green)),
+                      ),
+                    ),
+                  ]),
+                  TableRow(children: [
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('Neerav'),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('53'),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('6666666666'),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('09-04-2022 08:05:49'),
+                      ),
+                    ),
+                    TableCell(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text('Pending',
+                            style: TextStyle(color: Colors.red)),
+                      ),
+                    ),
+                  ]),
+                ],
+              )
+            ],
+          ),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                  child: const Text('Recent Doctors: '),
+                )
+              ]),
+          Container(
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Table(
+                    border: TableBorder.all(),
+                    columnWidths: const <int, TableColumnWidth>{
+                      0: FixedColumnWidth(60),
+                      1: FixedColumnWidth(43),
+                      2: FixedColumnWidth(90),
+                      3: FixedColumnWidth(85),
+                      4: FixedColumnWidth(80),
+                    },
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    children: <TableRow>[
+                      TableRow(children: [
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('Name'),
+                            color: const Color.fromARGB(255, 202, 220, 230),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('Age'),
+                            color: const Color.fromARGB(255, 202, 220, 230),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('Number'),
+                            color: const Color.fromARGB(255, 202, 220, 230),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('Department'),
+                            color: const Color.fromARGB(255, 202, 220, 230),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('Status'),
+                            color: const Color.fromARGB(255, 202, 220, 230),
+                          ),
+                        ),
+                      ]),
+                      TableRow(children: [
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('Mal'),
+                            height: 32,
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('37'),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('7777777777'),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('Psychotherapist'),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('Permanent',
+                                style: TextStyle(color: Colors.green)),
+                          ),
+                        ),
+                      ]),
+                      TableRow(children: [
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('Yrene'),
+                            height: 32,
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('29'),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('8989898989'),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('Pharmocologist'),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('Permanent',
+                                style: TextStyle(color: Colors.green)),
+                          ),
+                        ),
+                      ]),
+                      TableRow(children: [
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('Mal'),
+                            height: 32,
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('37'),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('7777777777'),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('Psychotherapist'),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('Permanent',
+                                style: TextStyle(color: Colors.green)),
+                          ),
+                        ),
+                      ]),
+                      TableRow(children: [
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('Alexander'),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('40'),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('8888888888'),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('Psychotherapist'),
+                          ),
+                        ),
+                        TableCell(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: const Text('Pending',
+                                style: TextStyle(color: Colors.red)),
+                          ),
+                        ),
+                      ]),
+                    ],
                   )
-                ]),
-                TableRow(children: [
-                  Column(children: const [Text('Javatpoint')]),
-                  Column(children: const [Text('MySQL')]),
-                  Column(children: const [Text('5*')]),
-                ]),
-                TableRow(children: [
-                  Column(children: const [Text('Javatpoint')]),
-                  Column(children: const [Text('ReactJS')]),
-                  Column(children: const [Text('5*')]),
-                ]),
-              ],
-            )
-          ]),
-          // floatingActionButton: FloatingActionButton(
-          //   onPressed: _incrementCounter,
-          //   tooltip: 'Increment',
-          //   child: const Icon(Icons.add),
-          // ), // This trailing comma makes auto-formatting nicer for build methods.
+                ],
+              ))
         ]));
   }
 }

@@ -21,7 +21,7 @@ class PhoneValidator extends TextFieldValidator {
   PhoneValidator({String errorText = 'Enter a valid phone number'})
       : super(errorText);
   @override
-  bool get ignoreEmptyValues => true;
+  bool get ignoreEmptyValues => false;
   @override
   bool isValid(String? value) {
     return hasMatch(r'([0-9]{10})', value!);

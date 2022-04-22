@@ -2,7 +2,7 @@
 
 import 'package:schizophrend/screens/auth/sign_up_screen.dart';
 import 'package:schizophrend/screens/admin/admin_dash.dart';
-import 'package:schizophrend/screens/doctor/doctor_dash.dart';
+// import 'package:schizophrend/screens/doctor/doctor_dash.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 

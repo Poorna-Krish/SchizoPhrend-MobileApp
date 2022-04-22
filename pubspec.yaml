@@ -79,6 +79,9 @@ flutter:
     - family: Roboto
       fonts:
         - asset: fonts/RobotoCondensed-Regular.ttf
+    - family: Times
+      fonts:
+        - asset: fonts/TimesNewRoman-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

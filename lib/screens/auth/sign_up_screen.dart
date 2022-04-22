@@ -1,13 +1,15 @@
 import 'package:schizophrend/constants.dart';
 import 'package:schizophrend/screens/auth/sign_in_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:form_field_validator/form_field_validator.dart';
+// import 'package:flutter_svg/svg.dart';
+// import 'package:form_field_validator/form_field_validator.dart';
 
 import 'components/sign_up_form.dart';
 
 class SignUpScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+
+  SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +39,7 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        const
-                        Text("Already have an account?"),
+                        const Text("Already have an account?"),
                         TextButton(
                           onPressed: () => Navigator.push(
                               context,
