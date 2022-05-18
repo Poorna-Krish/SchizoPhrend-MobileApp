@@ -1,6 +1,6 @@
 import 'package:schizophrend/screens/auth/sign_in_screen.dart';
 import 'package:schizophrend/screens/doctor/doctor_dash.dart';
-import 'package:schizophrend/screens/welcome/welcome_screen.dart';
+import 'package:schizophrend/screens/patient/patient_dash.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -76,7 +76,7 @@ class SchizoPhrendWelcome extends StatelessWidget {
                 onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const WelcomeScreen(),
+                      builder: (context) => const PatientDash(),
                     )),
                 child: const Text('PATIENT',
                     style: TextStyle(
